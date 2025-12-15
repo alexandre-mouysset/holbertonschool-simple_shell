@@ -10,7 +10,7 @@
  *
  * Return: Nothing (void)
  */
-void prompt(void)
+int prompt(void)
 {
 	char cwd[1000];
 
@@ -23,5 +23,15 @@ void prompt(void)
 			write(1, cwd, strlen(cwd));
 			write(1, "$ ", 2);
 		}
+		else
+			write(2, "Impossible to get the current working directory\n", 48);
 	}
+
+	else
+	{
+		write(2, "Is not a TTY (terminal)\n", 24);
+		return (1);
+	}
+
+return (0);
 }

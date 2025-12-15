@@ -6,7 +6,6 @@
 #include <string.h>
 #include <unistd.h>
 
-void prompt(void);
-
+int prompt(void);
 
 #endif
