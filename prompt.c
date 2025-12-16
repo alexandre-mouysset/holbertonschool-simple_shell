@@ -27,11 +27,5 @@ int prompt(void)
 			write(2, "Impossible to get the current working directory\n", 48);
 	}
 
-	else
-	{
-		write(2, "Is not a TTY (terminal)\n", 24);
-		return (1);
-	}
-
 return (0);
 }
