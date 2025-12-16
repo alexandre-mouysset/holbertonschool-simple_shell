@@ -11,5 +11,7 @@
 int prompt(void);
 char *read_line(void);
 int execute_command(char *line);
+int split_command(char *line, char **argv);
+char *split_line(char **buffer);
 
 #endif
