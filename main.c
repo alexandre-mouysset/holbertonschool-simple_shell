@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /**
  * main - Simple shell that reads and executes commands
@@ -9,6 +12,7 @@ int main(void)
 {
 	char *line;
 	char *token;
+	char *saveptr = NULL;
 
 	while (1)
 	{
@@ -21,12 +25,13 @@ int main(void)
 			break;
 		}
 
-		token = split_line(&line);
+		saveptr = line;
+		token = split_line(&saveptr);
 
 		while (token)
 		{
 			execute_command(token);
-			token = split_line(&line);
+			token = split_line(&saveptr);
 		}
 
 		free(line);

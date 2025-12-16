@@ -47,6 +47,7 @@ char *split_line(char **buffer)
 		return (NULL);
 
 	line = strtok(*buffer, "\n");
+
 	*buffer = NULL;
 
 	if (line == NULL)
@@ -56,6 +57,7 @@ char *split_line(char **buffer)
 		line++;
 
 	end = line + strlen(line) - 1;
+
 	while (end > line && (*end == ' ' || *end == '\t'))
 	{
 		*end = '\0';
