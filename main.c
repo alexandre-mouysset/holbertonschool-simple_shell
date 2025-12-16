@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * main - Simple shell that reads and executes commands
+ *
+ * Return: 0 on success
+ */
 int main(void)
 {
 	char *line;

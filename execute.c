@@ -9,14 +9,26 @@
  */
 int execute_command(char *line)
 {
-	char *argv[2];
+	char *argv[100];
+	char *token;
 	pid_t pid;
+	int i = 0;
 
 	if (line == NULL)
 		return (1);
 
-	argv[0] = line;
-	argv[1] = NULL;
+	token = strtok(line, " \t");
+
+	while (token && i < 99)
+	{
+		argv[i] = token;
+		i++;
+		token = strtok(NULL, " \t");
+	}
+	argv[i] = NULL;
+
+	if (i == 0)
+		return (0);
 
 	pid = fork();
 
