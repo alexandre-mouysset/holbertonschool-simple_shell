@@ -8,7 +8,6 @@
 int main(void)
 {
 	char *line;
-	char *token;
 
 	while (1)
 	{
@@ -21,16 +20,12 @@ int main(void)
 			break;
 		}
 
-		token = split_line(&line);
+		line[strcspn(line, "\n")] = '\0';
 
-		while (token)
-		{
-			execute_command(token);
-			token = split_line(&line);
-		}
+		if (*line)
+			execute_command(line);
 
 		free(line);
 	}
-
 	return (0);
 }

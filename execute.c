@@ -11,18 +11,16 @@ int execute_command(char *line)
 {
 	char *argv[100];
 	pid_t pid;
-	int i;
+	int argc;
 
 	if (line == NULL)
 		return (1);
 
-	i = split_command(line, argv);
-
-	if (i == 0)
+	argc = split_command(line, argv);
+	if (argc == 0)
 		return (0);
 
 	pid = fork();
-
 	if (pid == -1)
 		return (1);
 
@@ -34,6 +32,5 @@ int execute_command(char *line)
 	}
 
 	wait(NULL);
-
 	return (0);
 }
