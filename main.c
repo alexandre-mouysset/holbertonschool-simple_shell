@@ -16,9 +16,11 @@ int main(void)
 
 		if (line == NULL)
 		{
-			printf("\nEND OF FILE\n");
+			if (isatty(STDIN_FILENO))
+				printf("\nEND OF FILE\n");
 			break;
 		}
+
 		if (strlen(line) > 0 && line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = '\0';
 
