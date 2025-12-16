@@ -1,8 +1,4 @@
 #include "main.h"
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 /**
  * main - Simple shell that reads and executes commands
