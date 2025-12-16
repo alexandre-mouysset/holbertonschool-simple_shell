@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * main - Simple shell that reads and executes commands
+ *
+ * Return: 0 on success
+ */
 int main(void)
 {
 	char *line;
@@ -16,6 +21,8 @@ int main(void)
 		}
 		if (strlen(line) > 0 && line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = '\0';
+
+		execute_command(line);
 
 		free(line);
 	}
