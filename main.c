@@ -1,19 +1,19 @@
 #include "main.h"
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-/**
- * main - Simple shell that reads and executes commands
- *
- * Return: 0 on success
- */
 int main(void)
 {
 	char *line;
+	char *token;
+	char *end;
 
 	while (1)
 	{
 		prompt();
 		line = read_line();
-
 		if (line == NULL)
 		{
 			if (isatty(STDIN_FILENO))
@@ -21,10 +21,25 @@ int main(void)
 			break;
 		}
 
-		if (strlen(line) > 0 && line[strlen(line) - 1] == '\n')
-			line[strlen(line) - 1] = '\0';
+		token = strtok(line, "\n");
 
-		execute_command(line);
+		while (token)
+		{
+			while (*token == ' ' || *token == '\t')
+				token++;
+
+			end = token + strlen(token) - 1;
+			while (end > token && (*end == ' ' || *end == '\t'))
+			{
+				*end = '\0';
+				end--;
+			}
+
+			if (*token)
+				execute_command(token);
+
+			token = strtok(NULL, "\n");
+		}
 
 		free(line);
 	}
