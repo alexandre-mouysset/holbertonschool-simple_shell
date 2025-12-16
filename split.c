@@ -11,20 +11,16 @@
 int split_command(char *line, char **argv)
 {
 	char *token;
-	int i;
-
-	i = 0;
+	int i = 0;
 
 	if (line == NULL)
 		return (0);
 
-	token = strtok(line, " \t");
-
+	token = strtok(line, " \t\n");
 	while (token && i < 99)
 	{
-		argv[i] = token;
-		i++;
-		token = strtok(NULL, " \t");
+		argv[i++] = token;
+		token = strtok(NULL, " \t\n");
 	}
 	argv[i] = NULL;
 
@@ -34,21 +30,25 @@ int split_command(char *line, char **argv)
 /**
  * split_line - Get next line from buffer and trim spaces
  *
- * @buffer: Buffer to parse
+ * @buffer: Pointer to pointer to buffer (line from read_line)
  *
- * Return: Pointer to trimmed line or NULL
+ * Return: Pointer to trimmed line, or NULL if no more lines
  */
 char *split_line(char **buffer)
 {
+	static char *saveptr;
 	char *line;
 	char *end;
 
-	if (buffer == NULL || *buffer == NULL)
+	if (buffer != NULL && *buffer != NULL)
+		saveptr = *buffer;
+
+	if (saveptr == NULL)
 		return (NULL);
 
-	line = strtok(*buffer, "\n");
+	line = strtok(saveptr, "\n");
 
-	*buffer = NULL;
+	saveptr = NULL;
 
 	if (line == NULL)
 		return (NULL);
@@ -57,7 +57,6 @@ char *split_line(char **buffer)
 		line++;
 
 	end = line + strlen(line) - 1;
-
 	while (end > line && (*end == ' ' || *end == '\t'))
 	{
 		*end = '\0';
