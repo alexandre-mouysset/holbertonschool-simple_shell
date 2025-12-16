@@ -9,7 +9,6 @@ int main(void)
 {
 	char *line;
 	char *token;
-	char *end;
 
 	while (1)
 	{
@@ -22,24 +21,12 @@ int main(void)
 			break;
 		}
 
-		token = strtok(line, "\n");
+		token = split_line(&line);
 
 		while (token)
 		{
-			while (*token == ' ' || *token == '\t')
-				token++;
-
-			end = token + strlen(token) - 1;
-			while (end > token && (*end == ' ' || *end == '\t'))
-			{
-				*end = '\0';
-				end--;
-			}
-
-			if (*token)
-				execute_command(token);
-
-			token = strtok(NULL, "\n");
+			execute_command(token);
+			token = split_line(&line);
 		}
 
 		free(line);
