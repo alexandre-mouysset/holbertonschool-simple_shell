@@ -8,5 +8,6 @@
 
 int prompt(void);
 char *read_line(void);
+char *get_path(char **env);
 
 #endif
