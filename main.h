@@ -14,5 +14,6 @@ int execute_command(char *line);
 int split_command(char *line, char **argv);
 char *split_line(char **buffer);
 char **init_env(char **envp);
+char *get_path(char **env);
 
 #endif

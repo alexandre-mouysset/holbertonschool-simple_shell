@@ -38,3 +38,24 @@ char **init_env(char **envp)
 	env[count] = NULL;
 	return (env);
 }
+
+/**
+ * get_path - Retrieves the value of the PATH environment variable
+ *
+ * @env: Array of environment variables
+ *
+ * Return: Pointer to the PATH value, or NULL if not found
+ */
+char *get_path(char **env)
+{
+	int i = 0;
+
+	while (env[i])
+	{
+		if (strncmp(env[i], "PATH=", 5) == 0) /* If match, equals 0 */
+			return (env[i] + 5);			  /* +5 to go to the next string ("PATH=") = 5..* */
+
+		i++;
+	}
+	return (NULL);
+}
