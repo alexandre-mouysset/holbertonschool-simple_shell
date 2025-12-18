@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	char **env;
 	int i;
-	int exit_status;
+	int exit_status = 0;
 
 	(void)argc;
 	(void)argv;
@@ -22,7 +22,6 @@ int main(int argc, char **argv, char **envp)
 	if (env == NULL)
 		return (1);
 
-	exit_status = 0;
 
 	while (1)
 	{

@@ -13,6 +13,7 @@ int execute_command(char *line, char **env)
     char *argv[100];
     pid_t pid;
     int argc;
+    int status;
     char *path;
     char *path_copy;
     char *directory;
@@ -58,6 +59,6 @@ int execute_command(char *line, char **env)
         exit(127);
     }
 
-    wait(NULL);
-    return (0);
+    wait(&status);
+    return (WEXITSTATUS(status));
 }
