@@ -2,12 +2,24 @@
 
 /**
  * main - Simple shell that reads and executes commands
+ * @argc: Argument count (unused)
+ * @argv: Argument vector (unused)
+ * @envp: Environment variables
  *
- * Return: 0 on success
+ * Return: 0 on success, 1 on failure
  */
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
 	char *line;
+	char **env;
+	int i;
+
+	(void)argc;
+	(void)argv;
+
+	env = local_env(envp);
+	if (env == NULL)
+		return (1);
 
 	while (1)
 	{
@@ -23,9 +35,14 @@ int main(void)
 		line[strcspn(line, "\n")] = '\0';
 
 		if (*line)
-			execute_command(line);
+			execute_command(line, env);
 
 		free(line);
 	}
+
+	for (i = 0; env[i] != NULL; i++)
+		free(env[i]);
+	free(env);
+
 	return (0);
 }

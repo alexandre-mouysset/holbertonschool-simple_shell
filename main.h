@@ -10,10 +10,10 @@
 
 int prompt(void);
 char *read_line(void);
-int execute_command(char *line);
+int execute_command(char *line, char **env);
 int split_command(char *line, char **argv);
 char *split_line(char **buffer);
-char **init_env(char **envp);
+char **local_env(char **envp);
 char *get_path(char **env);
 
 #endif

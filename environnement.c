@@ -1,13 +1,13 @@
 #include "main.h"
 
 /**
- * init_env - Initializes a copy of the environment variables
+ * local_env - Initializes a copy of the environment variables
  *
  * @envp: Array of environment variables
  *
  * Return: Pointer to the new environment array, or NULL on failure
  */
-char **init_env(char **envp)
+char **local_env(char **envp)
 {
 	int i, j;
 	int count = 0;
