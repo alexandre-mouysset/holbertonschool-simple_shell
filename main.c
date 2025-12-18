@@ -13,6 +13,7 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	char **env;
 	int i;
+	int exit_status;
 
 	(void)argc;
 	(void)argv;
@@ -20,6 +21,8 @@ int main(int argc, char **argv, char **envp)
 	env = local_env(envp);
 	if (env == NULL)
 		return (1);
+
+	exit_status = 0;
 
 	while (1)
 	{
@@ -34,8 +37,8 @@ int main(int argc, char **argv, char **envp)
 
 		line[strcspn(line, "\n")] = '\0';
 
-		if (*line)
-			execute_command(line, env);
+		if (strlen(line) > 0)
+			exit_status = execute_command(line, env);
 
 		free(line);
 	}
@@ -44,5 +47,5 @@ int main(int argc, char **argv, char **envp)
 		free(env[i]);
 	free(env);
 
-	return (0);
+	return (exit_status);
 }
