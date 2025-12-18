@@ -18,17 +18,28 @@ int execute_command(char *line, char **env)
     char *path_copy;
     char *directory;
     char full_path[1000];
+    char *line_copy;
 
     if (line == NULL)
         return (1);
 
-    argc = split_command(line, argv);
+    line_copy = strdup(line);
+    if (line_copy == NULL)
+        return (1);
+
+    argc = split_command(line_copy, argv);
     if (argc == 0)
+    {
+        free(line_copy);
         return (0);
+    }
 
     pid = fork();
     if (pid == -1)
+    {
+        free(line_copy);
         return (1);
+    }
 
     if (pid == 0)
     {
@@ -36,6 +47,7 @@ int execute_command(char *line, char **env)
         {
             execve(argv[0], argv, env);
             fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+            free(line_copy);
             exit(127);
         }
 
@@ -43,22 +55,27 @@ int execute_command(char *line, char **env)
         if (path)
         {
             path_copy = strdup(path);
-            directory = strtok(path_copy, ":");
-
-            while (directory)
+            if (path_copy != NULL)
             {
-                sprintf(full_path, "%s/%s", directory, argv[0]);
-                execve(full_path, argv, env);
-                directory = strtok(NULL, ":");
-            }
+                directory = strtok(path_copy, ":");
 
-            free(path_copy);
+                while (directory)
+                {
+                    sprintf(full_path, "%s/%s", directory, argv[0]);
+                    execve(full_path, argv, env);
+                    directory = strtok(NULL, ":");
+                }
+
+                free(path_copy);
+            }
         }
 
         fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+        free(line_copy);
         exit(127);
     }
 
     wait(&status);
+    free(line_copy);
     return (WEXITSTATUS(status));
 }
