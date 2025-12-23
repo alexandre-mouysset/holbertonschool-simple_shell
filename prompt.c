@@ -19,7 +19,7 @@ int prompt(void)
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			write(1, "Alexandre@Nabil", 15);
+			write(1, "Alexandre@Nabil:", 16);
 			write(1, cwd, strlen(cwd));
 			write(1, "$ ", 2);
 		}
