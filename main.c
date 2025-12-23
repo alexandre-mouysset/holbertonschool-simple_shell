@@ -29,8 +29,6 @@ int main(int argc, char **argv, char **envp)
 		line = read_line();
 		if (line == NULL)
 		{
-			if (isatty(STDIN_FILENO))
-				printf("\nEND OF FILE\n");
 			break;
 		}
 
