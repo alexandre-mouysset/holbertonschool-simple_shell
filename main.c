@@ -12,7 +12,6 @@ int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	char **env;
-	int i;
 	int exit_status = 0;
 
 	(void)argc;
@@ -40,9 +39,7 @@ int main(int argc, char **argv, char **envp)
 		free(line);
 	}
 
-	for (i = 0; env[i] != NULL; i++)
-		free(env[i]);
-	free(env);
+	free_env(env);
 
 	return (exit_status);
 }

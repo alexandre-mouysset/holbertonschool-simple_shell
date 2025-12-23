@@ -59,3 +59,20 @@ char *get_path(char **env)
 	}
 	return (NULL);
 }
+
+/**
+ * free_env - Frees the environment variables array
+ *
+ * @env: Array of environment variables
+ */
+void free_env(char **env)
+{
+	int i;
+
+	if (env == NULL)
+		return;
+
+	for (i = 0; env[i] != NULL; i++)
+		free(env[i]);
+	free(env);
+}

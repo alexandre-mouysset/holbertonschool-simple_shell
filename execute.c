@@ -16,8 +16,6 @@ int execute_command(char *line, char **env)
     int argc;
     int status;
     char *path;
-    char *path_copy;
-    char *directory;
     char full_path[1000];
     char *line_copy;
     int i;
@@ -70,31 +68,45 @@ int execute_command(char *line, char **env)
             fprintf(stderr, "./hsh: 1: %s: not found\n", argv_dup[0]);
             for (i = 0; i < argc; i++)
                 free(argv_dup[i]);
+            free_env(env);
             exit(127);
         }
 
         path = get_path(env);
         if (path && strlen(path) > 0)
         {
-            path_copy = strdup(path);
-            if (path_copy != NULL)
+            char *p = path;
+            while (1)
             {
-                directory = strtok(path_copy, ":");
+                char *colon = strchr(p, ':');
+                int len;
 
-                while (directory)
+                if (colon)
+                    len = colon - p;
+                else
+                    len = strlen(p);
+
+                if (len == 0)
+                    sprintf(full_path, "./%s", argv_dup[0]);
+                else
                 {
-                    sprintf(full_path, "%s/%s", directory, argv_dup[0]);
-                    execve(full_path, argv_dup, env);
-                    directory = strtok(NULL, ":");
+                    memcpy(full_path, p, len);
+                    full_path[len] = '/';
+                    strcpy(full_path + len + 1, argv_dup[0]);
                 }
 
-                free(path_copy);
+                execve(full_path, argv_dup, env);
+
+                if (!colon)
+                    break;
+                p = colon + 1;
             }
         }
 
         fprintf(stderr, "./hsh: 1: %s: not found\n", argv_dup[0]);
         for (i = 0; i < argc; i++)
             free(argv_dup[i]);
+        free_env(env);
         exit(127);
     }
 

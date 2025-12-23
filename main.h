@@ -15,5 +15,6 @@ int split_command(char *line, char **argv);
 char *split_line(char **buffer);
 char **local_env(char **envp);
 char *get_path(char **env);
+void free_env(char **env);
 
 #endif
