@@ -69,6 +69,7 @@ int execute_command(char *line, char **env)
             for (i = 0; i < argc; i++)
                 free(argv_dup[i]);
             free_env(env);
+            free(line);
             exit(127);
         }
 
@@ -107,6 +108,7 @@ int execute_command(char *line, char **env)
         for (i = 0; i < argc; i++)
             free(argv_dup[i]);
         free_env(env);
+        free(line);
         exit(127);
     }
 
