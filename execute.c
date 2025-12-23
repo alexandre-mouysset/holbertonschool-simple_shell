@@ -11,6 +11,7 @@
 int execute_command(char *line, char **env)
 {
     char *argv[100];
+    char *argv_dup[100];
     pid_t pid;
     int argc;
     int status;
@@ -19,6 +20,7 @@ int execute_command(char *line, char **env)
     char *directory;
     char full_path[1000];
     char *line_copy;
+    int i;
 
     if (line == NULL)
         return (1);
@@ -34,20 +36,39 @@ int execute_command(char *line, char **env)
         return (0);
     }
 
+    /* Dupliquer les arguments avant de libérer line_copy */
+    for (i = 0; i < argc; i++)
+    {
+        argv_dup[i] = strdup(argv[i]);
+        if (argv_dup[i] == NULL)
+        {
+            for (int j = 0; j < i; j++)
+                free(argv_dup[j]);
+            free(line_copy);
+            return (1);
+        }
+    }
+    argv_dup[argc] = NULL;
+
+    /* Libérer line_copy ici puisqu'on a dupliqué les arguments */
+    free(line_copy);
+
     pid = fork();
     if (pid == -1)
     {
-        free(line_copy);
+        for (i = 0; i < argc; i++)
+            free(argv_dup[i]);
         return (1);
     }
 
     if (pid == 0)
     {
-        if (strchr(argv[0], '/') != NULL)
+        if (strchr(argv_dup[0], '/') != NULL)
         {
-            execve(argv[0], argv, env);
-            fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-            free(line_copy);
+            execve(argv_dup[0], argv_dup, env);
+            fprintf(stderr, "./hsh: 1: %s: not found\n", argv_dup[0]);
+            for (i = 0; i < argc; i++)
+                free(argv_dup[i]);
             exit(127);
         }
 
@@ -61,8 +82,8 @@ int execute_command(char *line, char **env)
 
                 while (directory)
                 {
-                    sprintf(full_path, "%s/%s", directory, argv[0]);
-                    execve(full_path, argv, env);
+                    sprintf(full_path, "%s/%s", directory, argv_dup[0]);
+                    execve(full_path, argv_dup, env);
                     directory = strtok(NULL, ":");
                 }
 
@@ -70,12 +91,14 @@ int execute_command(char *line, char **env)
             }
         }
 
-        fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-        free(line_copy);
+        fprintf(stderr, "./hsh: 1: %s: not found\n", argv_dup[0]);
+        for (i = 0; i < argc; i++)
+            free(argv_dup[i]);
         exit(127);
     }
 
     wait(&status);
-    free(line_copy);
+    for (i = 0; i < argc; i++)
+        free(argv_dup[i]);
     return (WEXITSTATUS(status));
 }
