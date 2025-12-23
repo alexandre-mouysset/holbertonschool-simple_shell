@@ -21,6 +21,7 @@ int execute_command(char *line, char **env)
     char full_path[1000];
     char *line_copy;
     int i;
+    int j;
 
     if (line == NULL)
         return (1);
@@ -42,7 +43,7 @@ int execute_command(char *line, char **env)
         argv_dup[i] = strdup(argv[i]);
         if (argv_dup[i] == NULL)
         {
-            for (int j = 0; j < i; j++)
+            for (j = 0; j < i; j++)
                 free(argv_dup[j]);
             free(line_copy);
             return (1);
