@@ -52,7 +52,7 @@ int execute_command(char *line, char **env)
         }
 
         path = get_path(env);
-        if (path)
+        if (path && strlen(path) > 0)
         {
             path_copy = strdup(path);
             if (path_copy != NULL)
