@@ -6,7 +6,7 @@
  * @argv: Argument vector (unused)
  * @envp: Environment variables
  *
- * Return: 0 on success, 1 on failure
+ * Return: Exit status
  */
 int main(int argc, char **argv, char **envp)
 {
@@ -21,17 +21,23 @@ int main(int argc, char **argv, char **envp)
 	if (env == NULL)
 		return (1);
 
-
 	while (1)
 	{
 		prompt();
 		line = read_line();
-		if (line == NULL)
-		{
+		if (line == NULL) /* (Ctrl+D) */
 			break;
-		}
 
+		
 		line[strcspn(line, "\n")] = '\0';
+
+		
+		if (strcmp(line, "exit") == 0)
+		{
+			free(line);
+			free_env(env);
+			exit(exit_status);
+		}
 
 		if (strlen(line) > 0)
 			exit_status = execute_command(line, env);
@@ -40,6 +46,5 @@ int main(int argc, char **argv, char **envp)
 	}
 
 	free_env(env);
-
 	return (exit_status);
 }
