@@ -1,0 +1,81 @@
+.TH SIMPLE_SHELL "Nov 2025" "1.0" "Holberton School"
+.SH NAME
+simple_shell
+.SH DESCRIPTION
+.B simple_shell
+is a program that reproduces the functionality of a Unix/Linux terminal shell.
+It is a lightweight, educational implementation of the bash shell.
+.PP
+Once launched, it displays a prompt ($) with personal pwd where you can type commands.
+The program parses your input, splits it into arguments, and executes the corresponding command.
+.SH GETTING STARTED
+.PP
+.B $ ./simple_shell
+.PP
+The shell will then display a prompt ($) and wait for your commands. Type exit to quit (EOF)
+.SH USAGE EXAMPLES
+.TP
+.B $ ls
+Lists files in the current directory
+.TP
+.B $ pwd
+Shows the full path of the current working directory
+.TP
+.B $ echo "Welcome"
+Prints text to the screen
+.TP
+.B $ cat file.txt
+Displays the contents of a text file
+.TP
+.B $ env
+Lists all environment variables in the system
+.SH HOW IT WORKS
+The shell operates through the following steps:
+.TP
+.B 1. Display Prompt
+A simple "$" invites you to type a command
+.TP
+.B 2. Read Input
+Your text is read from the keyboard
+.TP
+.B 3. Parse
+The line is split into words (the command and its arguments)
+.TP
+.B 4. Execute
+The shell locates the command and executes it with the provided arguments
+.TP
+.B 5. Return to Prompt
+The cycle repeats, waiting for the next command.
+.SH BUILT-IN COMMANDS
+.TP
+.B exit
+Terminates the program and closes the shell
+.TP
+.B env
+Displays all available environment variables
+.SH CODE STRUCTURE
+.TP
+.B main.c
+Entry point of the program
+.TP
+.B prompt.c
+Manages prompt display
+.TP
+.B read_line.c
+Retrieves commands typed by the user
+.TP
+.B split.c
+Splits commands into arguments
+.TP
+.B execute.c
+Executes the parsed commands
+.TP
+.B environnement.c
+Accesses environment variables
+.SH COMPILATION
+Use a standard C compiler:
+.PP
+.B $ gcc -o simple_shell *.c
+.SH AUTHORS
+MOUYSSET Alexandre -- Zinini Nabil
+

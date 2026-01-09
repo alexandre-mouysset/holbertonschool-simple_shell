@@ -109,4 +109,4 @@ $
 
 ## Project Authors :dancers:
 - [MOUYSSET Alexandre](https://github.com/alexandre-mouysset)
-- [Nabil zinini](https://github.com/zinininabil-stack)
+- [Zinini Nabil](https://github.com/zinininabil-stack)
